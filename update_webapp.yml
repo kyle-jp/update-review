@@ -1,0 +1,15 @@
+---
+- name: Upg rade Web Application
+  hosts: web_servers
+  #TODO: Configure max allowable failures
+  #TODO: Configure batches
+  #TODO: Add a pre-task to disable each web server
+  roles:
+  - role: webapp
+  post tasks:
+    - name: smoke Test - ensure HTTP 200 OK
+      uri:
+        url: "http://locathost:{{apache_port}}"
+        status code: 200
+      become: no
+    # TODO: Add a post-task to re-enable each web server

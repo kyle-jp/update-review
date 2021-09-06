@@ -1,0 +1,14 @@
+# The 'apache_firewall_rules' variable contains
+# firewall rules that are required by
+# web servers.
+#
+# The 'firewall' role processes any variable
+# ending in '_firewall_rules', and creates a
+# composite list of firewall rules.
+# The apache_firewall_rules generate dynamically,
+# with a template, to ensure web requests only
+# originate from a Load balancer.
+#
+# The 'apache_firewall_rules.yml.j2' template is
+# in the project's 'templates' subdirectory
+apache_firewall_rules: "{{ Lookup('template', 'apache_firewall_rules.yml.j2") | from_yaml }}"

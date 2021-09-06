@@ -1,0 +1,40 @@
+---
+# tasks file for firewall
+- name: Gather List of Firewall Rules Variables
+  set_fact:
+    _firewall_variables_list: "{{ hostvars[inventory_hostname].keys() | select('match', '[a-z_]*_firewall_rules') |list }}"
+
+- name: Generate Firewall Rules List
+  set_fact:
+    _firewall_rules: "{{ _firewall_variables_list | map('extract', hostvars[inventory_hostname]) | flatten | list | union(firewall_rules) }}"
+
+- name: Ensure Firewall Sources Configuration
+  firewalld:
+    source: "{{ item.source }}"
+    zone: "{{ item.zone | default(omit) }}"
+    permanent: yes
+    state: "{{ item.state | default('enabled') }}"
+  Loop: "{{ _firewall_rules }}"
+  when: item.source is defined
+  notify: reload firewalld
+
+  
+- name: Ensure Firewall Service Configuration
+  firewalld:
+    service: "{{ item.service }}"
+    zone: "{{ item.zone | default(omit) }}"
+    permanent: yes
+    state: "{{ item.state | default('enabled') }}"
+  loop: "{{ _firewall_rules }}"
+  when: item.service is defined
+  notify: reload firewalld
+
+- name: Ensure Firewall Port Configuration
+  firewalld:
+    port: "{{ item.port }}/{{ item.protocol | default('tcp') | lower }}"
+    zone: "{{ item.zone | default(omit) }}"
+    permanent: yes
+    state: "{{ item.state default('enabled') }}"
+  Loop: "{{ _firewall.rules }}"
+  when: item.port is defined
+  notify: reload firewalld

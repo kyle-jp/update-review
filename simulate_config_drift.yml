@@ -1,0 +1,6 @@
+---
+- name: Simulate Manual Change
+  hosts: rhel84-node3
+  roles:
+  - role: apache
+    apache port: 80

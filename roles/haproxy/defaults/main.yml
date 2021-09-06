@@ -1,0 +1,8 @@
+---
+# defaults file for haproxy
+haproxy_log_level: info
+haproxy_port: 80
+haproxy_backend_name: app
+haproxy_backend_port: 80
+haproxy_backend_pool: []
+haproxy_active_backends: []

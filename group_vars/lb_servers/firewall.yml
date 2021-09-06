@@ -1,0 +1,9 @@
+# The firewall role creates a composite list of firewall rules, from any variable with a
+# name ending in '_firewall_rules'.
+#
+# The 'haproxy_firewall_rules' variable contains only those firewall rules required to enable
+# the haproxy Load balancer service.
+#
+# One firewall rule: enable client-facing port.
+haproxy firewall rules:
+  - port: "{{haproxy_port}}"

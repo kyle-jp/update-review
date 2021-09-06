@@ -1,0 +1,11 @@
+- name: Ensure HAProxy is deployed 
+  hosts: lb_servers 
+  force_handlers: True 
+  
+  roles: 
+    # The "firewall" rote requires a "firewall rules" variable be defined. 
+    - role: haproxy 
+      haproxy_backend_port: "{{apache_port}}"
+      # all backend servers are active; none are disabled.
+      haproxy_backend_pool: "{{group['web_servers']}}"
+      haproxy_active_backends: "{{group['web_servers']}}"

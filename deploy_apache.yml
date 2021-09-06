@@ -1,0 +1,8 @@
+- name: Ensure Apache is deployed 
+  hosts: web_servers 
+  force_handlers: True 
+  gather_facts: no 
+  
+  roles: 
+    # Apache-speciific firewall rules are defined in the 'apache_firewall_rules' variable 
+    - role: apache

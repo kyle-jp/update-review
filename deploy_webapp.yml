@@ -1,0 +1,6 @@
+- name: Ensure web app is deployed
+  hosts: web_servers 
+  gather_facts: no 
+  
+  roles: 
+    - role: webapp

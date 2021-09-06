@@ -1,0 +1,7 @@
+[lb_servers]
+rhel79-node1
+
+[web_servers]
+rhel84-node1
+rhel84-node2 
+rhel84-node3

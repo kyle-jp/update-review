@@ -1,0 +1,12 @@
+- name: Look at Vars
+  hosts: servera. lab example. com
+  tasks:
+    - set_fact:
+        _firewall_variables_list: "{{hostvars[inventory_hostname].keys()| select('match','[a-z_]*firewall_rules') | list }}"
+    - debug: 
+        var: _firewall_variables_list
+
+    - set_facts:
+        firewall_rules: "{{ _firewall_variables_list | map('extract', hostvars(inventory_hostname]) | flatten | list }}"
+    - debug:
+        var: firewall_rules
